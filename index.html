@@ -28,51 +28,55 @@
 		<div id = 'info'> Press f to mloc </div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.min.js"></script>
 		<script>
-		var counter = 0;
-		var texture = new THREE.TextureLoader().load("mloctexture.png");
-		texture.wrapS = THREE.RepeatWrapping;
-		texture.wrapT = THREE.RepeatWrapping;
-		texture.repeat.set(10,10);
-		window.setInterval(textRotate,1000)
-		function textRotate(){
-			texture.rotation.x += 0.1;
-		}
-		document.addEventListener('keydown',(event) => {
-			console.log('Cube beginning to move');
-			animate();
-			console.log(counter);
-			if (counter === 10) {
-				console.log('Win condition registered');
-				document.getElementById('mloc').innerHTML = 'Congrats! You did an mloc!';
-			}
-			counter++;
-		}
-		,false);
-			var scene = new THREE.Scene(); // create a new scene
-			var camera = new THREE.PerspectiveCamera( 90, window.innerWidth/window.innerHeight, 0.1, 1000 );
-            // new viewpoint. 90 is FOV,
-			var renderer = new THREE.WebGLRenderer(); // render in our objects
-			renderer.setSize( window.innerWidth, window.innerHeight ); // sets the size
-			document.body.appendChild( renderer.domElement ); //
+			var counter = 0;
+			var texture = new THREE.TextureLoader().load("mloctexture.png");
+			texture.wrapS = THREE.RepeatWrapping;
+			texture.wrapT = THREE.RepeatWrapping;
+			texture.repeat.set(10,10);
 
-			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			var texture = new THREE.TextureLoader().load( 'mloc.png' );
-			var material = new THREE.MeshBasicMaterial( { map: texture } );
-			var cube = new THREE.Mesh( geometry, material );
+			const textRotate = () => {
+				texture.rotation.x += 0.1;
+			}
+			
+			window.setInterval(textRotate, 1000)
+			
+			const fEvent = (event) => {
+				console.log('Cube beginning to move');
+				animate();
+				console.log(counter);
+				if (counter === 10) {
+					console.log('Win condition registered');
+					document.getElementById('mloc').innerHTML = 'Congrats! You did an mloc!';
+				}
+				counter++;	
+			}
+
+			document.addEventListener('keydown', fEvent ,false);
+
+			var scene = new THREE.Scene(); // create a new scene
+			var camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.1, 1000);
+			// new viewpoint. 90 is FOV,
+			var renderer = new THREE.WebGLRenderer(); // render in our objects
+			renderer.setSize(window.innerWidth, window.innerHeight); // sets the size
+			document.body.appendChild(renderer.domElement); //
+
+			var geometry = new THREE.BoxGeometry(1, 1, 1);
+			var texture = new THREE.TextureLoader().load('mloc.png');
+			var material = new THREE.MeshBasicMaterial({ map: texture });
+			var cube = new THREE.Mesh(geometry, material);
 			var loader = new THREE.CubeTextureLoader()
-			scene.add( cube );
+			scene.add(cube);
 
 			camera.position.z = 5;
-			
-			var animate = function () {
-				requestAnimationFrame( animate );
+
+			var animate = () => {
+				requestAnimationFrame(animate);
 
 				cube.rotation.x += 0.1;
 				cube.rotation.y += 0.1;
 
 				renderer.render(scene, camera);
-			};
-
+			};	
 		</script>
 		<div id = 'mloc'></div>
 	</body>
